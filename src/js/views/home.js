@@ -16,14 +16,14 @@ export const Home = () => {
 		<h1>Contact List</h1>
 		<div className="list-group contact-list">
             {contacts.map((contact, index) =>
-                <div key={contact.id}>
+                <div key={index}>
 
                         <ContactCard
                             full_name={contact.full_name}
                             address={contact.address}
                             email={contact.email}
                             phone={contact.phone}
-                            img={contact.img}
+                            img={rigoImage}
                             onDelete={()=>actions.delContact(contact.id)}
                             index={contact.id}
                         />
