@@ -1,16 +1,12 @@
 import rigoImage from "../../img/rigo-baby.jpg";
 
+const apiUrl=process.env.API_URL
+const agendaSlug=process.env.AGENDA_SLUG
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			contacts:[
-				{name:"Danilo", address:"Uruguay", email:"Danilo@4geeks.com", phone:"095-014-724", img:rigoImage},
-				{name:"Danilo", address:"Uruguay", email:"Danilo@4geeks.com", phone:"095-014-724", img:rigoImage},
-				{name:"Danilo", address:"Uruguay", email:"Danilo@4geeks.com", phone:"095-014-724", img:rigoImage},
-				{name:"Danilo", address:"Uruguay", email:"Danilo@4geeks.com", phone:"095-014-724", img:rigoImage},
-				{name:"Danilo", address:"Uruguay", email:"Danilo@4geeks.com", phone:"095-014-724", img:rigoImage}
-            ],
-            numero:221
+			contacts:[]
 		},
 
 		actions: {
@@ -29,6 +25,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				newContacts[index]={data, img:rigoImage}
 				setStore({contacts:newContacts})
 			},
+			getAgenda:()=>{
+				fetch (apiUrl+"/agenda/"+agendaSlug)
+				.then(response=>{
+					if(response.ok){
+						//respueta satisfactoria
+						return response.json()
+					}else{
+						//Tuve una respuesta de error
+						console.log(response.status + ": " + response.statusText)
+					}
+				})
+				.then(data=>{
+					console.log(data)
+					setStore({contacts:data})
+				})
+				.catch(error=>{
+					console.error(error)
+				})
+				console.log("Inicada la peticion")
+			},
+			// Use getActions to call a function within a function
 			exampleFunction: () =>{
                 getActions().changeColor(0, "green");
             },
