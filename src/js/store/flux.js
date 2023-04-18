@@ -24,6 +24,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				newContacts.splice(index,1)
 				setStore({contacts:newContacts})
 			},
+			updateContact(data, index){
+				let newContacts=[...getStore().contacts]
+				newContacts[index]={data, img:rigoImage}
+				setStore({contacts:newContacts})
+			},
 			exampleFunction: () =>{
                 getActions().changeColor(0, "green");
             },
