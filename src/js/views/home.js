@@ -19,7 +19,7 @@ export const Home = () => {
                 <div key={index}>
 
                         <ContactCard
-                            full_name={contact.full_name}
+                            name={contact.full_name}
                             address={contact.address}
                             email={contact.email}
                             phone={contact.phone}

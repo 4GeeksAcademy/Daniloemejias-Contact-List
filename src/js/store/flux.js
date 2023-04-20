@@ -10,15 +10,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 
 		actions: {
-			addContact:(contact)=>{
+			addContact:async (contact)=>{
+				let response=await fetch(apiUrl + "/",{
+					body:JSON.stringify({...contact, agenda_slug:agendaSlug}),
+					method:"POST",
+					headers:{
+						"Content-Type":"application/json"
+					}
+				})
+				if(!response.ok){
+					console.log(response.status +": " + response.statusText)
+					return
+				}
+				let data=await response.json()
+				//Agregar validacion para que no admita valores vacios
 				let store=getStore()
-				let newContacts=[...store.contacts,contact]
+				let newContacts=[...store.contacts,{...data, img:rigoImage}]
 				setStore({contacts:newContacts})
 			},
-			delContact:(index)=>{
-				let newContacts=[...getStore().contacts]
-				newContacts.splice(index,1)
-				setStore({contacts:newContacts})
+			delContact:async (id)=>{
+				let response=await fetch(apiUrl +"/"+id,{
+					method:"DELETE"
+				})
+				if(response.ok){
+					let newContacts = [...getStore().contacts]
+					let index = newContacts.findIndex(contact => contact.id == id)
+					newContacts.splice(index,1)
+					setStore({contacts: newContacts})
+				}else{
+					console.error(resp.status+":"+ resp.statusText)
+				}
 			},
 			updateContact(data, index){
 				let newContacts=[...getStore().contacts]
@@ -38,7 +59,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.then(data=>{
 					console.log(data)
-					setStore({contacts:data})
+					setStore({contacts:data.map(contact=>({...contact, img: rigoImage}))})
 				})
 				.catch(error=>{
 					console.error(error)
