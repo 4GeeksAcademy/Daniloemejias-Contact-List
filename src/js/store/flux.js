@@ -41,10 +41,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error(resp.status+":"+ resp.statusText)
 				}
 			},
-			updateContact(data, index){
-				let newContacts=[...getStore().contacts]
-				newContacts[index]={data, img:rigoImage}
-				setStore({contacts:newContacts})
+			updateContact: async (contact, index) => {
+				
+				let response = await fetch(apiUrl+index,{
+					body:JSON.stringify(contact),
+					method:"PUT",
+					headers:{
+						"Content-Type":"application/json"
+					}
+				})
+				if (!response.ok){
+					console.log(response.status + ": "+response.statusText)
+					return 
+				}
+				let store = getStore() 
+				let newContacts =[...store.contacts];
+				newContacts [index] = contact;
+				setStore({ ...store, contacts: newContacts });
+				console.log(newContacts)
 			},
 			getAgenda:()=>{
 				fetch (apiUrl+"/agenda/"+agendaSlug)
