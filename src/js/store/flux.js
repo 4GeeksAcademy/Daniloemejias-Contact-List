@@ -41,6 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error(resp.status+":"+ resp.statusText)
 				}
 			},
+
 			updateContact: async (contact, index) => {
 				
 				let response = await fetch(apiUrl+index,{
@@ -59,6 +60,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				newContacts [index] = contact;
 				setStore({ ...store, contacts: newContacts });
 				console.log(newContacts)
+
 			},
 			getAgenda:()=>{
 				fetch (apiUrl+"/agenda/"+agendaSlug)
