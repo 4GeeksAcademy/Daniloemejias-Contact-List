@@ -15,11 +15,11 @@ export const Modal = props => {
 			//Crear nuevo contacto
 		} else if(props.index>=0){
 			// Editar contacto
-			let updateContact=store.contacts.find(contact=>contact.id==props.index)
-			setaddresse(updateContact.address)
-			setphone(updateContact.phone)
-			setemail(updateContact.email)
-			setcontactName(updateContact.full_name)
+			let editContact=store.contacts.find(contact=>contact.id==props.index)
+			setaddresse(editContact.address)
+			setphone(editContact.phone)
+			setemail(editContact.email)
+			setcontactName(editContact.full_name)
 		} else {
 			//Indice invalido
 		}
@@ -37,7 +37,7 @@ export const Modal = props => {
 			actions.addContact(newContact)
 		} else if(props.index>=0){
 			// Editar contacto
-			actions.updateContact(newContact,props.index)
+			actions.editContact(newContact,props.index)
 		} else {
 			//Indice invalido
 		}

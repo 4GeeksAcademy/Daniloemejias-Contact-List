@@ -42,9 +42,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			updateContact: async (contact, index) => {
-				
-				let response = await fetch(apiUrl+index,{
+			editContact:async (contact, index) => {
+				let actions = getActions()
+				console.log(index) 
+				console.log (contact) 
+				let response = await fetch(apiUrl+"/"+index,{
 					body:JSON.stringify(contact),
 					method:"PUT",
 					headers:{
@@ -55,11 +57,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(response.status + ": "+response.statusText)
 					return 
 				}
-				let store = getStore() 
-				let newContacts =[...store.contacts];
-				newContacts [index] = contact;
-				setStore({ ...store, contacts: newContacts });
-				console.log(newContacts)
+				actions.getAgenda()
 
 			},
 			getAgenda:()=>{
